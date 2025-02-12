@@ -1,0 +1,214 @@
+EVA1_6_UNIQUE_ENUM
+MySQL Shell 8.0.41
+
+Copyright (c) 2016, 2025, Oracle and/or its affiliates.
+Oracle is a registered trademark of Oracle Corporation and/or its affiliates.
+Other names may be trademarks of their respective owners.
+
+Type '\help' or '\?' for help; '\quit' to exit.
+ MySQL  JS > \sql
+Switching to SQL mode... Commands end with ;
+ MySQL  SQL > \connect mc- root@localhost
+Creating a session to 'root@localhost'
+Fetching global names for auto-completion... Press ^C to stop.
+Your MySQL connection id is 10 (X protocol)
+Server version: 8.0.41 MySQL Community Server - GPL
+No default schema selected; type \use <schema> to set one.
+ MySQL  localhost:33060+ ssl  SQL > use tbd_eva1;
+Default schema set to `tbd_eva1`.
+Fetching global names, object names from `tbd_eva1` for auto-completion... Press ^C to stop.
+ MySQL  localhost:33060+ ssl  tbd_eva1  SQL > desc producto;
++--------+-------------+------+-----+---------+----------------+
+| Field  | Type        | Null | Key | Default | Extra          |
++--------+-------------+------+-----+---------+----------------+
+| id     | int         | NO   | PRI | NULL    | auto_increment |
+| nombre | varchar(50) | NO   |     | NULL    |                |
+| precio | float(10,2) | YES  |     | NULL    |                |
++--------+-------------+------+-----+---------+----------------+
+3 rows in set (0.0027 sec)
+ MySQL  localhost:33060+ ssl  tbd_eva1  SQL > insert into producto(nombre,precio)
+                                           -> values("Tablet",5000),("Celular",1000),("Laptop",10000.58);
+Query OK, 3 rows affected (0.0229 sec)
+
+Records: 3  Duplicates: 0  Warnings: 0
+ MySQL  localhost:33060+ ssl  tbd_eva1  SQL > select * from producto;
++----+---------+---------+
+| id | nombre  | precio  |
++----+---------+---------+
+|  1 | Tablet  |    5000 |
+|  2 | Celular |    1000 |
+|  3 | Laptop  | 10000.6 |
++----+---------+---------+
+3 rows in set (0.0007 sec)
+ MySQL  localhost:33060+ ssl  tbd_eva1  SQL > insert into producto(precio)
+                                           -> value(50000);
+ERROR: 1364: Field 'nombre' doesn't have a default value
+ MySQL  localhost:33060+ ssl  tbd_eva1  SQL > select * from producto;
++----+---------+---------+
+| id | nombre  | precio  |
++----+---------+---------+
+|  1 | Tablet  |    5000 |
+|  2 | Celular |    1000 |
+|  3 | Laptop  | 10000.6 |
++----+---------+---------+
+3 rows in set (0.0010 sec)
+ MySQL  localhost:33060+ ssl  tbd_eva1  SQL > insert into producto
+                                           -> value (7,"Tacos", 5000);
+Query OK, 1 row affected (0.0151 sec)
+ MySQL  localhost:33060+ ssl  tbd_eva1  SQL > insert into producto(nombre,precio)
+                                           -> value("Sandia",60);
+Query OK, 1 row affected (0.0164 sec)
+ MySQL  localhost:33060+ ssl  tbd_eva1  SQL > select * from producto;
++----+---------+---------+
+| id | nombre  | precio  |
++----+---------+---------+
+|  1 | Tablet  |    5000 |
+|  2 | Celular |    1000 |
+|  3 | Laptop  | 10000.6 |
+|  7 | Tacos   |    5000 |
+|  8 | Sandia  |      60 |
++----+---------+---------+
+5 rows in set (0.0005 sec)
+ MySQL  localhost:33060+ ssl  tbd_eva1  SQL > insert into producto value (7,"Tacos", 5000);
+ERROR: 1062: Duplicate entry '7' for key 'producto.PRIMARY'
+ MySQL  localhost:33060+ ssl  tbd_eva1  SQL > insert into producto(nombre,precio) value("Sandia",60);
+Query OK, 1 row affected (0.0045 sec)
+ MySQL  localhost:33060+ ssl  tbd_eva1  SQL > insert into producto(nombre,precio) value("Sandia",60);
+Query OK, 1 row affected (0.0069 sec)
+ MySQL  localhost:33060+ ssl  tbd_eva1  SQL > insert into producto(nombre,precio) value("Sandia",60);
+Query OK, 1 row affected (0.0043 sec)
+ MySQL  localhost:33060+ ssl  tbd_eva1  SQL > insert into producto(nombre,precio) value("Sandia",60);
+Query OK, 1 row affected (0.0042 sec)
+ MySQL  localhost:33060+ ssl  tbd_eva1  SQL > insert into producto(nombre,precio) value("Sandia",60);
+Query OK, 1 row affected (0.0043 sec)
+ MySQL  localhost:33060+ ssl  tbd_eva1  SQL > insert into producto(nombre,precio) value("Sandia",60);
+Query OK, 1 row affected (0.0045 sec)
+ MySQL  localhost:33060+ ssl  tbd_eva1  SQL > select * from producto;
++----+---------+---------+
+| id | nombre  | precio  |
++----+---------+---------+
+|  1 | Tablet  |    5000 |
+|  2 | Celular |    1000 |
+|  3 | Laptop  | 10000.6 |
+|  7 | Tacos   |    5000 |
+|  8 | Sandia  |      60 |
+|  9 | Sandia  |      60 |
+| 10 | Sandia  |      60 |
+| 11 | Sandia  |      60 |
+| 12 | Sandia  |      60 |
+| 13 | Sandia  |      60 |
+| 14 | Sandia  |      60 |
++----+---------+---------+
+11 rows in set (0.0005 sec)
+ MySQL  localhost:33060+ ssl  tbd_eva1  SQL > create table cliente(
+                                           -> id int hey auto_increment,
+                                           -> nombre varchar(50) not null,
+                                           -> apellidos varchar(50),
+                                           -> rfc varchar(13) not null unique);
+ERROR: 1064: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'hey auto_increment,
+nombre varchar(50) not null,
+apellidos varchar(50),
+rfc varc' at line 2
+ MySQL  localhost:33060+ ssl  tbd_eva1  SQL > create table cliente( id int key auto_increment, nombre varchar(50) not null, apellidos varchar(50), rfc varchar(13) not null unique);
+ERROR: 1050: Table 'cliente' already exists
+ MySQL  localhost:33060+ ssl  tbd_eva1  SQL > show tables;
++--------------------+
+| Tables_in_tbd_eva1 |
++--------------------+
+| actor              |
+| ciudad             |
+| cliente            |
+| pais               |
+| persona            |
+| producto           |
+| prueba             |
+| vehiculo           |
++--------------------+
+8 rows in set (0.0015 sec)
+ MySQL  localhost:33060+ ssl  tbd_eva1  SQL > drop cliente;
+ERROR: 1064: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'cliente' at line 1
+ MySQL  localhost:33060+ ssl  tbd_eva1  SQL > drop cliente
+                                           -> ;
+ERROR: 1064: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'cliente' at line 1
+ MySQL  localhost:33060+ ssl  tbd_eva1  SQL > drop table cliente;
+Query OK, 0 rows affected (0.0438 sec)
+ MySQL  localhost:33060+ ssl  tbd_eva1  SQL > create table cliente( id int key auto_increment, nombre varchar(50) not null, apellidos varchar(50), rfc varchar(13) not null unique);
+Query OK, 0 rows affected (0.0329 sec)
+ MySQL  localhost:33060+ ssl  tbd_eva1  SQL > insert into cliente(nombre,apellidos,rfc)
+                                           -> value("Juan","Perez","khffh654");
+Query OK, 1 row affected (0.0063 sec)
+ MySQL  localhost:33060+ ssl  tbd_eva1  SQL > insert into cliente(nombre,apellidos,rfc) value("Juan","Perez","khffh654");
+ERROR: 1062: Duplicate entry 'khffh654' for key 'cliente.rfc'
+ MySQL  localhost:33060+ ssl  tbd_eva1  SQL > select * from cliente;
++----+--------+-----------+----------+
+| id | nombre | apellidos | rfc      |
++----+--------+-----------+----------+
+|  1 | Juan   | Perez     | khffh654 |
++----+--------+-----------+----------+
+1 row in set (0.0005 sec)
+ MySQL  localhost:33060+ ssl  tbd_eva1  SQL > insert into cliente(nombre,apellidos,rfc) value("Luis","Garciapena","khff456546");
+Query OK, 1 row affected (0.0069 sec)
+ MySQL  localhost:33060+ ssl  tbd_eva1  SQL > create table shirts(
+                                           -> id int key auto_increment,
+                                           -> nombre varchar(50),
+                                           -> tama enum("x-small","small","medium","large","x-large"));
+Query OK, 0 rows affected (0.0259 sec)
+ MySQL  localhost:33060+ ssl  tbd_eva1  SQL > desc shirts;
++--------+----------------------------------------------------+------+-----+---------+----------------+
+| Field  | Type                                               | Null | Key | Default | Extra          |
++--------+----------------------------------------------------+------+-----+---------+----------------+
+| id     | int                                                | NO   | PRI | NULL    | auto_increment |
+| nombre | varchar(50)                                        | YES  |     | NULL    |                |
+| tama   | enum('x-small','small','medium','large','x-large') | YES  |     | NULL    |                |
++--------+----------------------------------------------------+------+-----+---------+----------------+
+3 rows in set (0.0023 sec)
+ MySQL  localhost:33060+ ssl  tbd_eva1  SQL > insert into shirts(nombre,tama)
+                                           -> value("Polo","s");
+ERROR: 1265: Data truncated for column 'tama' at row 1
+ MySQL  localhost:33060+ ssl  tbd_eva1  SQL > insert into shirts(nombre,tama) value("Polo","small");
+Query OK, 1 row affected (0.0150 sec)
+ MySQL  localhost:33060+ ssl  tbd_eva1  SQL > insert into shirts(nombre,tama) value("Otra2","x-samll");
+ERROR: 1265: Data truncated for column 'tama' at row 1
+ MySQL  localhost:33060+ ssl  tbd_eva1  SQL > insert into shirts(nombre,tama) value("Otra2","x-small");
+Query OK, 1 row affected (0.0153 sec)
+ MySQL  localhost:33060+ ssl  tbd_eva1  SQL > insert into shirts(nombre,tama) value("Otra3","medium");
+Query OK, 1 row affected (0.0052 sec)
+ MySQL  localhost:33060+ ssl  tbd_eva1  SQL > select * from shirts;
++----+--------+---------+
+| id | nombre | tama    |
++----+--------+---------+
+|  1 | Polo   | small   |
+|  2 | Otra2  | x-small |
+|  3 | Otra3  | medium  |
++----+--------+---------+
+3 rows in set (0.0010 sec)
+ MySQL  localhost:33060+ ssl  tbd_eva1  SQL > drop table cliente;
+Query OK, 0 rows affected (0.0443 sec)
+ MySQL  localhost:33060+ ssl  tbd_eva1  SQL > create table cliente;
+ERROR: 4028: A table must have at least one visible column.
+ MySQL  localhost:33060+ ssl  tbd_eva1  SQL > create table cliente(;
+ERROR: 1064: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1
+ MySQL  localhost:33060+ ssl  tbd_eva1  SQL > create table cliente(
+                                           -> id int key,
+                                           -> ^C
+ MySQL  localhost:33060+ ssl  tbd_eva1  SQL > create table cliente(
+                                           -> id int key auto_increment,
+                                           -> nombre varchar(50) not null,
+                                           -> apellidos varchar(50),
+                                           -> rfc varchar(13) unique,
+                                           -> tipo_persona enum("fisica","moral"));
+Query OK, 0 rows affected (0.0407 sec)
+ MySQL  localhost:33060+ ssl  tbd_eva1  SQL > select * from cliente;
+Empty set (0.0020 sec)
+ MySQL  localhost:33060+ ssl  tbd_eva1  SQL > desc cliente;
++--------------+------------------------+------+-----+---------+----------------+
+| Field        | Type                   | Null | Key | Default | Extra          |
++--------------+------------------------+------+-----+---------+----------------+
+| id           | int                    | NO   | PRI | NULL    | auto_increment |
+| nombre       | varchar(50)            | NO   |     | NULL    |                |
+| apellidos    | varchar(50)            | YES  |     | NULL    |                |
+| rfc          | varchar(13)            | YES  | UNI | NULL    |                |
+| tipo_persona | enum('fisica','moral') | YES  |     | NULL    |                |
++--------------+------------------------+------+-----+---------+----------------+
+5 rows in set (0.0025 sec)
+ MySQL  localhost:33060+ ssl  tbd_eva1  SQL >
